@@ -63,13 +63,13 @@ k6 run --insecure-skip-tls-verify --summary-time-unit=ms --out json=output/metri
 
 menu(){    
 
-LOGO="$(wget -q -O /tmp/logo artii.herokuapp.com/make?text=Load Tester&font=small)"
+LOGO="$(wget -q -O /tmp/logo artii.herokuapp.com/make?text=Load+Tester&font=small)"
 LOGO="$(cat /tmp/logo)"
 rm -rf /tmp/logo
-
 numchoice=1
 while [[ $numchoice != 0 ]]; do
     echo "${logo}${LOGO}${normal}"
+    echo "${logo}Version: 0.001${normal}"
     echo -n "
     1. Run a load test for website
     0. Exit
