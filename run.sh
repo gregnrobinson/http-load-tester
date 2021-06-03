@@ -4,6 +4,15 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 run(){
+linkchecker=$(pip list | grep -w LinkChecker)
+
+if [[ $linkchecker ]]; then
+    echo "${bold}python dependancies already installed...${normal}"
+else
+    echo "${bold}instaling python dependancies...${normal}"
+    pip install linkchecker
+fi
+
 mkdir -p output
 
 printf "Enter a website with https://: eg. (https://www.<DOMAIN>.com/): "
