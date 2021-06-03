@@ -1,9 +1,11 @@
+#!/bin/bash
+set -o pipefail
+
 logo=$(tput setaf 6)
 warn=$(tput setaf 3)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-run(){
 linkchecker=$(pip list | grep -w LinkChecker)
 
 if [[ $linkchecker ]]; then
@@ -13,6 +15,7 @@ else
     pip install linkchecker
 fi
 
+run(){
 mkdir -p output
 
 printf "Enter a website with https://: eg. (https://www.<DOMAIN>.com/): "
