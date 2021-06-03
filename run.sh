@@ -64,7 +64,7 @@ cat > output/settings <<HERE
   vus: ${VUS},
 HERE
 
-cp ./recipe_template.js ./recipe-${NAME}.js
+cp ./k6_template.js ./recipe-${NAME}.js
 sed -i -e "/let res;/r output/urls" ./recipe-${NAME}.js
 sed -i -e "/options/r output/settings" ./recipe-${NAME}.js
 rm -rf ./output/k6-template-${NAME}.js-e output/settings output/urls output/crawl-*
@@ -92,7 +92,7 @@ cat > output/settings <<HERE
   vus: ${VUS},
 HERE
 
-cp ./recipe_template.js ./output/k6-template-${NAME}.js
+cp ./k6_template.js ./output/k6-template-${NAME}.js
 sed -i -e "/let res;/r output/urls" ./output/k6-template-${NAME}.js
 sed -i -e "/options/r output/settings" ./output/k6-template-${NAME}.js
 rm -rf ./output/k6-template-${NAME}.js-e output/settings output/urls output/crawl-*
