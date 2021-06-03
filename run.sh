@@ -80,7 +80,6 @@ export urls=($(linkchecker ${WEBSITE} -r ${RECURSIVENESS} -v | sed '/Real/!d; s/
 
 printf "%s\n" "${urls[@]}" > output/crawl-${NAME}-`date +"%m-%d-%Y-%H%M%S"`
 
-
 for i in ${urls[@]}; do
 cat >> output/urls <<HERE
   res = http.get("${i}");
