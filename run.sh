@@ -64,13 +64,13 @@ cat > output/settings <<HERE
   vus: ${VUS},
 HERE
 
-cp ./k6_template.js ./recipe-${NAME}.js
-sed -i -e "/let res;/r output/urls" ./recipe-${NAME}.js
-sed -i -e "/options/r output/settings" ./recipe-${NAME}.js
+cp ./k6_template.js ./recipe.js
+sed -i -e "/let res;/r output/urls" ./recipe.js
+sed -i -e "/options/r output/settings" ./recipe.js
 rm -rf ./output/k6-template-${NAME}.js-e output/settings output/urls output/crawl-*
 
-k6 run --insecure-skip-tls-verify --summary-time-unit=ms --out json=output/metrics-${NAME}-`date +"%m-%d-%Y-%H%M%S"`.json ./recipe-${NAME}.js
-rm -rf recipe-*
+k6 run --insecure-skip-tls-verify --summary-time-unit=ms --out json=output/metrics-${NAME}-`date +"%m-%d-%Y-%H%M%S"`.json ./recipe.js
+rm -rf recipe.js*
 echo "${bold}${green}http metrics are in the output folder${normal}"
 }
 
@@ -99,7 +99,7 @@ rm -rf ./output/k6-template-${NAME}.js-e output/settings output/urls output/craw
 echo "${bold}${green}k6 template file stored in the output folder...${normal}"
 }
 
-menu(){    
+menu(){
 
 logo="$(wget -q -O /tmp/logo artii.herokuapp.com/make?text=K6X&font=small)"
 logo="$(cat /tmp/logo)"
