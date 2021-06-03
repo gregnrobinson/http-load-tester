@@ -7,7 +7,6 @@ To operate with this repository, make sure you have the following packages insta
 
 - [k6](https://k6.io/docs/getting-started/installation/)
 - [python](https://www.python.org/downloads/)
-- [pip](https://pip.pypa.io/en/stable/installing/)
 
 # To start a load test
 
