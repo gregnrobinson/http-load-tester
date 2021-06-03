@@ -27,7 +27,7 @@ else
   pip install linkchecker
 fi
 
-read -p "Enter a website URL: (default: https://www.<DOMAIN>.com/): " WEBSITE
+read -p "Enter a website URL: (default: https://example.com/): " WEBSITE
 [ -n "${WEBSITE}" ] || WEBSITE='https://example.com'
 
 read -p "Enter a recursive setting for how many urls should be collected (default: 2): " RECURSIVENESS
