@@ -70,7 +70,7 @@ logo="$(cat /tmp/logo)"
 rm -rf /tmp/logo
 numchoice=1
 while [[ $numchoice != 0 ]]; do
-    echo "${cyan}${logo}${yellow}${logo_number}${normal}"
+    echo "${cyan}${logo}${normal}"
     echo "${cyan}Version: 0.001${normal}"
     echo -n "
     1. Run a load test for website
