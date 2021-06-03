@@ -1,7 +1,8 @@
 #!/bin/bash
 set -o pipefail
 
-logo=$(tput setaf 6)
+cyan=$(tput setaf 6)
+yellow=$(tput setaf 3)
 warn=$(tput setaf 3)
 bold=$(tput bold)
 normal=$(tput sgr0)
@@ -18,17 +19,17 @@ fi
 run(){
 mkdir -p output
 
-printf "Enter a website with https://: eg. (https://www.<DOMAIN>.com/): "
-read -r WEBSITE
+read -p "Enter a website URL: (default: https://www.<DOMAIN>.com/): " WEBSITE
+[ -z "${WEBSITE}" ] && WEBSITE='https://example.com'
 
-printf "Enter a recursive setting for how many urls should be collected: "
-read -r RECURSIVENESS
+read -p "Enter a recursive setting for how many urls should be collected (default: 2): " RECURSIVENESS
+[ -z "${RECURSIVENESS}" ] && RECURSIVENESS='2'
 
-printf "Enter the duration in (m/s): eg. 60s: "
-read -r DURATION
+read -p "Enter the duration in (m/s) (default: 60s): " DURATION
+[ -z "${DURATION}" ] && DURATION='60s'
 
-printf "Enter the amount of virtual users: eg. 2: "
-read -r VUS
+read -p "Enter the amount of virtual users (default: 2): " VUS
+[ -z "${VUS}" ] && VUS='2'
 
 if [[ "$WEBSITE" == *"www"* ]]; then
   export NAME=$(echo $WEBSITE | cut -d"." -f2 | cut -d"." -f3)
@@ -63,13 +64,14 @@ k6 run --insecure-skip-tls-verify --summary-time-unit=ms --out json=output/metri
 
 menu(){    
 
-LOGO="$(wget -q -O /tmp/logo artii.herokuapp.com/make?text=Load+Tester&font=small)"
-LOGO="$(cat /tmp/logo)"
+logo="$(wget -q -O /tmp/logo artii.herokuapp.com/make?text=K69&font=small)"
+logo="$(cat /tmp/logo)"
+
 rm -rf /tmp/logo
 numchoice=1
 while [[ $numchoice != 0 ]]; do
-    echo "${logo}${LOGO}${normal}"
-    echo "${logo}Version: 0.001${normal}"
+    echo "${cyan}${logo}${yellow}${logo_number}${normal}"
+    echo "${cyan}Version: 0.001${normal}"
     echo -n "
     1. Run a load test for website
     0. Exit
