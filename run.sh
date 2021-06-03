@@ -1,4 +1,11 @@
+logo=$(tput setaf 6)
+warn=$(tput setaf 3)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
 run(){
+mkdir -p output
+
 printf "Enter a website with https://: eg. (https://www.<DOMAIN>.com/): "
 read -r WEBSITE
 
@@ -19,24 +26,27 @@ fi
 
 export urls=($(linkchecker ${WEBSITE} -r ${RECURSIVENESS} -v | sed '/Real/!d; s/Real URL//; '/https/\!d'; s/ //g'))
 
+printf "%s\n" "${urls[@]}" > output/crawl-${NAME}-`date +"%m-%d-%Y-%H%M%S"`
+echo "${bold}Output file is in the .helper folder${normal}"
+
 for i in ${urls[@]}; do
-cat >> .output/urls <<HERE
+cat >> output/urls <<HERE
   res = http.get("${i}");
   trackDataMetricsPerURL(res);
 HERE
 done
 
-cat > .output/settings <<HERE
+cat > output/settings <<HERE
   duration: '${DURATION}',
   vus: ${VUS},
 HERE
 
-cp ./recipe_template.js .output/recipe-${NAME}.js
-sed -i -e "/let res;/r .output/urls" .output/recipe-${NAME}.js
-sed -i -e "/options/r .output/settings" .output/recipe-${NAME}.js
-rm -rf .output/recipe.js-e .output/settings .output/urls
+cp ./recipe_template.js ./recipe-${NAME}.js
+sed -i -e "/let res;/r output/urls" ./recipe-${NAME}.js
+sed -i -e "/options/r output/settings" ./recipe-${NAME}.js
+rm -rf ./recipe-${NAME}.js-e output/settings output/urls
 
-k6 run --insecure-skip-tls-verify --summary-time-unit=ms --out json=${NAME}.json recipe.js
+k6 run --insecure-skip-tls-verify --summary-time-unit=ms --out json=output/metrics-${NAME}-`date +"%m-%d-%Y-%H%M%S"`.json ./recipe-${NAME}.js
 }
 
 menu(){    
@@ -47,8 +57,7 @@ rm -rf /tmp/logo
 
 numchoice=1
 while [[ $numchoice != 0 ]]; do
-    echo "${logo}${LOGO}${normal}"  
-    echo $INFO
+    echo "${logo}${LOGO}${normal}"
     echo -n "
     1. Run a load test for website
     0. Exit
