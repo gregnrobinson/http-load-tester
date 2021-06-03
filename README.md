@@ -4,7 +4,7 @@ Ths project is used to perform a load test against a provided URL. The first ste
 
 # Prerequisites
 
-To operate with this repository, make sure you have the following packages installed.
+To operate with this repository, ensure the following packages installed.
 
 - [k6](https://k6.io/docs/getting-started/installation/)
 - [python 3.X](https://www.python.org/downloads/)
