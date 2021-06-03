@@ -6,7 +6,7 @@ Ths project is used to perform a load test against a provided URL. The first ste
 To operate with this repository, make sure you have the following packages installed.
 
 - [k6](https://k6.io/docs/getting-started/installation/)
-- [python](https://www.python.org/downloads/)
+- [python 3.X](https://www.python.org/downloads/)
 
 # To start a load test
 
