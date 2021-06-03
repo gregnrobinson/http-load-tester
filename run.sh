@@ -8,13 +8,23 @@ warn=$(tput setaf 3)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
+pip=$(python3 -m pip --version)
 linkchecker=$(pip list | grep -w LinkChecker)
 
 if [[ $linkchecker ]]; then
-    echo "${bold}python dependancies already installed...${normal}"
+  echo "${bold}pip installed...${normal}"
 else
-    echo "${bold}instaling python dependancies...${normal}"
-    pip install linkchecker
+  echo "${bold}installing pip...${normal}"
+  curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+  python3 get-pip.py
+  rm -rf get-pip.py
+fi
+
+if [[ $linkchecker ]]; then
+  echo "${bold}python dependancies installed...${normal}"
+else
+  echo "${bold}installing python dependancies...${normal}"
+  pip install linkchecker
 fi
 
 read -p "Enter a website URL: (default: https://www.<DOMAIN>.com/): " WEBSITE
@@ -40,7 +50,7 @@ mkdir -p output
 export urls=($(linkchecker ${WEBSITE} -r ${RECURSIVENESS} -v | sed '/Real/!d; s/Real URL//; '/https/\!d'; s/ //g'))
 
 printf "%s\n" "${urls[@]}" > output/crawl-${NAME}-`date +"%m-%d-%Y-%H%M%S"`
-echo "${bold}k6 template file is in the output folder${normal}"
+echo "${bold}k6 template file stored in the output folder...${normal}"
 
 for i in ${urls[@]}; do
 cat >> output/urls <<HERE
@@ -87,7 +97,7 @@ cp ./recipe_template.js ./output/k6-template-${NAME}.js
 sed -i -e "/let res;/r output/urls" ./output/k6-template-${NAME}.js
 sed -i -e "/options/r output/settings" ./output/k6-template-${NAME}.js
 rm -rf ./output/k6-template-${NAME}.js-e output/settings output/urls output/crawl-*
-echo "${bold}${green}k6 template file is in the output folder${normal}"
+echo "${bold}${green}k6 template file stored in the output folder...${normal}"
 }
 
 menu(){    
