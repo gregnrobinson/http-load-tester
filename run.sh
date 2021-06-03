@@ -77,7 +77,6 @@ while [[ $numchoice != 0 ]]; do
     read numchoice
     case $numchoice in
         "1" ) run ;;
-        "2" ) recipe ;;
         "0" ) break ;;
         * ) echo -n "You entered an incorrect option. Please try again." ;;
     esac
