@@ -15,6 +15,15 @@ else
     pip install linkchecker
 fi
 
+curl -s https://api.github.com/repos/k6io/k6/releases/latest \
+| grep "browser_download_url.*macos-arm64.zip" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+
+unzip *.zip && rm -rf *.zip
+cp -r ./k6*/. . && rm -rf ./k6-v*
+
 run(){
 mkdir -p output
 
